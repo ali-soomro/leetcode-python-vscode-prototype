@@ -8,6 +8,8 @@ E4 gates the extension. It must prove that a single Python solution file is:
 
 The reproducible local fixtures are in `experiments/e4/`.
 
+Current outcome: Candidate A passed the unchanged live Run checks for #20, #206, and #104. Candidate B is rejected because LeetCode's wrapper rejects its future import. The selected Candidate A contract is documented in [e4-harness-contract.md](e4-harness-contract.md); Pylance and typing-import evidence remain required before E4 closes.
+
 ## Local check
 
 ```sh
