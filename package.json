@@ -20,12 +20,27 @@
       {
         "command": "leetcodePythonLocal.showStatus",
         "title": "LeetCode Python Local: Show Status"
+      },
+      {
+        "command": "leetcodePythonLocal.importStarter",
+        "title": "LeetCode Python Local: Import Starter from Clipboard"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "LeetCode Python Local",
+      "properties": {
+        "leetcodePythonLocal.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Python executable used only to parse clipboard starter code locally."
+        }
+      }
+    }
   },
   "scripts": {
     "compile": "tsc -p ./",
-    "check:e4": "python3 experiments/e4/run_local.py"
+    "check:e4": "python3 experiments/e4/run_local.py",
+    "test": "npm run compile && node --test out/**/*.test.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
