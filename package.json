@@ -1,0 +1,35 @@
+{
+  "name": "leetcode-python-local",
+  "displayName": "LeetCode Python Local",
+  "description": "Trustworthy local Python feedback for LeetCode-style solutions.",
+  "version": "0.0.1",
+  "publisher": "ali-soomro",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:leetcodePythonLocal.showStatus"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "leetcodePythonLocal.showStatus",
+        "title": "LeetCode Python Local: Show Status"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "check:e4": "python3 experiments/e4/run_local.py"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/vscode": "^1.95.0",
+    "typescript": "^5.7.2"
+  }
+}

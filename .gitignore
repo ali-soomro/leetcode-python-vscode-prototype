@@ -1,0 +1,8 @@
+node_modules/
+.npm-cache/
+out/
+.vscode-test/
+*.vsix
+__pycache__/
+*.py[cod]
+e4-evidence/
