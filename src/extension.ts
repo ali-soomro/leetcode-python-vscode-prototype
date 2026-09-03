@@ -16,10 +16,17 @@ export function activate(context: vscode.ExtensionContext): void {
   const importStarter = vscode.commands.registerCommand(
     "leetcodePythonLocal.importStarter",
     async () => {
-      const workspace = vscode.workspace.workspaceFolders?.[0];
-      if (!workspace) {
-        await vscode.window.showErrorMessage("Open a workspace folder before importing a LeetCode Python starter.");
-        return;
+      let workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
+      if (!workspaceRoot) {
+        const selected = await vscode.window.showOpenDialog({
+          canSelectFiles: false,
+          canSelectFolders: true,
+          canSelectMany: false,
+          openLabel: "Use folder for LeetCode Python problems",
+          title: "Choose a folder for local LeetCode Python problems",
+        });
+        workspaceRoot = selected?.[0];
+        if (!workspaceRoot) return;
       }
       const pythonPath = vscode.workspace.getConfiguration("leetcodePythonLocal").get<string>("pythonPath", "python3");
       const clipboard = await vscode.env.clipboard.readText();
@@ -28,7 +35,7 @@ export function activate(context: vscode.ExtensionContext): void {
         const title = await vscode.window.showInputBox({ prompt: "Problem title", value: parsed.methodName });
         if (!title) return;
         const directory = await createProblemPackage(
-          workspace.uri.fsPath,
+          workspaceRoot.fsPath,
           title,
           reconcileTypingImports(clipboard, parsed),
           parsed
