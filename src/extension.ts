@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { createProblemPackage } from "./problemPackage";
+import { normalizeStarterSource } from "./normalizeStarter";
 import { parseStarter } from "./pythonAst";
 import { reconcileTypingImports } from "./typingImports";
 
@@ -31,13 +32,14 @@ export function activate(context: vscode.ExtensionContext): void {
       const pythonPath = vscode.workspace.getConfiguration("leetcodePythonLocal").get<string>("pythonPath", "python3");
       const clipboard = await vscode.env.clipboard.readText();
       try {
-        const parsed = await parseStarter(pythonPath, clipboard);
+        const normalizedSource = normalizeStarterSource(clipboard);
+        const parsed = await parseStarter(pythonPath, normalizedSource);
         const title = await vscode.window.showInputBox({ prompt: "Problem title", value: parsed.methodName });
         if (!title) return;
         const directory = await createProblemPackage(
           workspaceRoot.fsPath,
           title,
-          reconcileTypingImports(clipboard, parsed),
+          reconcileTypingImports(normalizedSource, parsed),
           parsed
         );
         await vscode.window.showTextDocument(vscode.Uri.file(`${directory}/solution.py`));
